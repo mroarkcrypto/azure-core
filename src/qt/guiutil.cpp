@@ -491,10 +491,10 @@ fs::path static StartupShortcutPath()
 {
     std::string chain = gArgs.GetChainName();
     if (chain == CBaseChainParams::MAIN)
-        return GetSpecialFolderPath(CSIDL_STARTUP) / "Bloodstone.lnk";
+        return GetSpecialFolderPath(CSIDL_STARTUP) / "AZURE.lnk";
     if (chain == CBaseChainParams::TESTNET) // Remove this special case when CBaseChainParams::TESTNET = "testnet4"
-        return GetSpecialFolderPath(CSIDL_STARTUP) / "Bloodstone (testnet).lnk";
-    return GetSpecialFolderPath(CSIDL_STARTUP) / strprintf("Bloodstone (%s).lnk", chain);
+        return GetSpecialFolderPath(CSIDL_STARTUP) / "AZURE (testnet).lnk";
+    return GetSpecialFolderPath(CSIDL_STARTUP) / strprintf("AZURE (%s).lnk", chain);
 }
 
 bool GetStartOnSystemStartup()
@@ -574,8 +574,8 @@ fs::path static GetAutostartFilePath()
 {
     std::string chain = gArgs.GetChainName();
     if (chain == CBaseChainParams::MAIN)
-        return GetAutostartDir() / "bloodstone.desktop";
-    return GetAutostartDir() / strprintf("bloodstone-%s.desktop", chain);
+        return GetAutostartDir() / "azure.desktop";
+    return GetAutostartDir() / strprintf("azure-%s.desktop", chain);
 }
 
 bool GetStartOnSystemStartup()
@@ -619,9 +619,9 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         optionFile << "[Desktop Entry]\n";
         optionFile << "Type=Application\n";
         if (chain == CBaseChainParams::MAIN)
-            optionFile << "Name=Bloodstone\n";
+            optionFile << "Name=AZURE\n";
         else
-            optionFile << strprintf("Name=Bloodstone (%s)\n", chain);
+            optionFile << strprintf("Name=AZURE (%s)\n", chain);
         optionFile << "Exec=" << pszExePath << strprintf(" -min -chain=%s\n", chain);
         optionFile << "Terminal=false\n";
         optionFile << "Hidden=false\n";
