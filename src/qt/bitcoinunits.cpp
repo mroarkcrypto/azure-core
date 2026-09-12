@@ -44,10 +44,10 @@ QString BitcoinUnits::longName(int unit)
 {
     switch(unit)
     {
-    case BTC: return QString("STONE");
-    case mBTC: return QString("MBar");
-    case uBTC: return QString::fromUtf8("KBar");
-    case SAT: return QString("Bar");
+    case BTC: return QString("AZURE");
+    case mBTC: return QString("mAZURE");
+    case uBTC: return QString::fromUtf8("μAZURE");
+    case SAT: return QString("sat");
     default: return QString("???");
     }
 }
@@ -56,9 +56,9 @@ QString BitcoinUnits::shortName(int unit)
 {
     switch(unit)
     {
-    case mBTC: return QString::fromUtf8("MBars");
-    case uBTC: return QString::fromUtf8("KBars");
-    case SAT: return QString("Bars");
+    case mBTC: return QString("mAZURE");
+    case uBTC: return QString::fromUtf8("μAZURE");
+    case SAT: return QString("sat");
     default: return longName(unit);
     }
 }
@@ -67,10 +67,10 @@ QString BitcoinUnits::description(int unit)
 {
     switch(unit)
     {
-    case BTC: return QString("Bloodstone (STONE)");
-    case mBTC: return QString("MBar (Milli-STONE) (1 / 1" THIN_SP_UTF8 "000)");
-    case uBTC: return QString("KBar (Micro-STONE) (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
-    case SAT: return QString("Bar (satoshi) (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+    case BTC: return QString("Azure Guardian Coin (AZURE)");
+    case mBTC: return QString("mAZURE (Milli-AZURE) (1 / 1" THIN_SP_UTF8 "000)");
+    case uBTC: return QString("μAZURE (Micro-AZURE) (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+    case SAT: return QString("sat (smallest AZURE unit) (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
     default: return QString("???");
     }
 }
