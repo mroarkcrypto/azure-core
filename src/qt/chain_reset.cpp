@@ -496,7 +496,7 @@ bool EnsureRelaunchChainOrAbort(const fs::path& datadir, QWidget* parent)
 
     if (HasCorruptChainLog(datadir)) {
         LogPrintf(
-            "Detected corrupt Bloodstone chain log in %s — wiping blocks/chainstate\n",
+            "Detected corrupt legacy Bloodstone chain log in %s — wiping blocks/chainstate\n",
             datadir.string());
         QString error;
         if (!WipeChainData(datadir, error)) {
@@ -514,10 +514,10 @@ bool EnsureRelaunchChainOrAbort(const fs::path& datadir, QWidget* parent)
     const QString dir = QString::fromStdString(datadir.string());
     const auto answer = QMessageBox::question(
         parent,
-        QObject::tr("Reset chain data for Bloodstone relaunch?"),
+        QObject::tr("Reset legacy chain data for AZURE?"),
         QObject::tr(
-            "This data folder contains blockchain data from before the June 2026 "
-            "Bloodstone relaunch (or an old Bloodstone path).\n\n"
+            "This data folder contains legacy Bloodstone blockchain data "
+            "(or data from an old Bloodstone path).\n\n"
             "Folder: %1\n\n"
             "Remove blocks and chainstate so the wallet can sync again?\n"
             "Your wallet files in this folder are kept.")
