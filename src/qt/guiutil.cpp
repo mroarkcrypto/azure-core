@@ -72,7 +72,8 @@
 void ForceActivation();
 #endif
 
-#define URI_SCHEME "bloodstone"
+#define URI_SCHEME "azure"
+#define LEGACY_URI_SCHEME "bloodstone"
 
 namespace GUIUtil {
 
@@ -132,8 +133,13 @@ void AddButtonShortcut(QAbstractButton* button, const QKeySequence& shortcut)
 
 bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 {
-    // return if URI is not valid or is no bitcoin: URI
-    if(!uri.isValid() || uri.scheme() != QString(URI_SCHEME))
+    // Accept the current AZURE URI scheme and the legacy Bloodstone scheme.
+    if (!uri.isValid())
+        return false;
+
+    const QString scheme = uri.scheme();
+    if (scheme.compare(QString(URI_SCHEME), Qt::CaseInsensitive) != 0 &&
+        scheme.compare(QString(LEGACY_URI_SCHEME), Qt::CaseInsensitive) != 0)
         return false;
 
     SendCoinsRecipient rv;
