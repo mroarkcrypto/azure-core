@@ -23,7 +23,7 @@ void WriteRelaunchMarker(const fs::path& datadir);
 bool WipeChainData(const fs::path& datadir, QString& error_out);
 
 /**
- * Create or patch bloodstone.conf with safe defaults:
+ * Create or patch azure.conf with safe defaults:
  *  - seed peers via addnode= only (NEVER exclusive connect=)
  *  - listen/dnsseed/discover enabled
  *  - strip VPS-only datadir= lines
@@ -50,7 +50,7 @@ QString ResolveUsableDataDirectory(const QString& preferred, const QString& curr
 bool EnsureRelaunchChainOrAbort(const fs::path& datadir, QWidget* parent);
 
 /**
- * After bloodstone.conf is read, undo a bad datadir= override (e.g. copied from a
+ * After azure.conf is read, undo a bad datadir= override (e.g. copied from a
  * VPS path) and strip that line from the config file under config_home.
  */
 void SanitizeAfterConfigRead(const fs::path& config_home, const QString& default_datadir);

@@ -567,9 +567,9 @@ int GuiMain(int argc, char* argv[])
         InitError(strprintf(Untranslated("Specified data directory \"%s\" does not exist.\n"), bad));
         QMessageBox::critical(nullptr, PACKAGE_NAME,
             QObject::tr("Error: Specified data directory \"%1\" does not exist.\n\n"
-                        "Remove any datadir= line from bloodstone.conf that points at a "
-                        "server path (for example /root/bloodstone). On Windows the default "
-                        "folder is %%APPDATA%%\\Bloodstone.")
+                        "Remove any datadir= line from azure.conf that points at a "
+                        "server path. On Windows the default "
+                        "folder is %%APPDATA%%\\AZURE.")
                 .arg(QString::fromStdString(bad)));
         return EXIT_FAILURE;
     }
@@ -595,9 +595,9 @@ int GuiMain(int argc, char* argv[])
         InitError(strprintf(Untranslated("Specified data directory \"%s\" does not exist.\n"), bad));
         QMessageBox::critical(nullptr, PACKAGE_NAME,
             QObject::tr("Error: Specified data directory \"%1\" does not exist.\n\n"
-                        "Remove any datadir= line from bloodstone.conf that points at a "
-                        "server path (for example /root/bloodstone). On Windows the default "
-                        "folder is %%APPDATA%%\\Bloodstone.")
+                        "Remove any datadir= line from azure.conf that points at a "
+                        "server path. On Windows the default "
+                        "folder is %%APPDATA%%\\AZURE.")
                 .arg(QString::fromStdString(bad)));
         return EXIT_FAILURE;
     }
