@@ -301,7 +301,7 @@ public:
 
         bech32_hrp = "azure";
 
-        vFixedSeeds = std::vector<uint8_t>(std::begin(chainparams_seed_main), std::end(chainparams_seed_main));
+        vFixedSeeds.clear(); // AZURE: no inherited Bloodstone fixed seeds
 
         fDefaultConsistencyChecks = false;
         fRequireStandard = true;
