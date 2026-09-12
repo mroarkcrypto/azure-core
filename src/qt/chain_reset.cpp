@@ -271,11 +271,7 @@ QString MigrateLegacySettingsPath(const QString& current_default)
 
 namespace {
 
-/** Official seed endpoints — always addnode=, NEVER exclusive connect=. */
-constexpr const char* kSeedEndpoints[] = {
-    "64.188.22.190:17333",
-    "192.119.82.145:17333",
-};
+/** AZURE mainnet currently has no hard-coded seed addnodes here. */
 
 bool LineKeyEquals(const std::string& line, const char* key)
 {
@@ -351,22 +347,19 @@ void ClearStalePeerCache(const fs::path& datadir)
 std::string BuildDefaultConfBody()
 {
     std::ostringstream body;
-    body << "# Bloodstone Core — auto-created by bloodstone-qt\n"
+    body << "# AZURE Core — auto-created by AZURE Qt\n"
             "# Do NOT use exclusive connect= (it disables peer discovery).\n"
             "server=1\n"
             "listen=1\n"
-            "dnsseed=1\n"
+            "dnsseed=0\n"
             "discover=1\n"
             "upnp=1\n"
-            "port=17333\n"
-            "rpcport=18332\n"
+            "port=29825\n"
+            "rpcport=49825\n"
             "rpcbind=127.0.0.1\n"
             "rpcallowip=127.0.0.1\n"
             "maxconnections=64\n"
             "txindex=1\n";
-    for (const char* endpoint : kSeedEndpoints) {
-        body << "addnode=" << endpoint << "\n";
-    }
     return body.str();
 }
 
@@ -420,18 +413,11 @@ bool EnsureDefaultNodeConfig(const fs::path& datadir)
         };
         ensure_kv("server", "server=1");
         ensure_kv("listen", "listen=1");
-        ensure_kv("dnsseed", "dnsseed=1");
+        ensure_kv("dnsseed", "dnsseed=0");
         ensure_kv("discover", "discover=1");
-        ensure_kv("port", "port=17333");
-        ensure_kv("rpcport", "rpcport=18332");
+        ensure_kv("port", "port=29825");
+        ensure_kv("rpcport", "rpcport=49825");
         ensure_kv("maxconnections", "maxconnections=64");
-
-        for (const char* endpoint : kSeedEndpoints) {
-            if (!ConfigHasSeedAddnode(lines, endpoint)) {
-                lines.emplace_back(std::string("addnode=") + endpoint);
-                modified = true;
-            }
-        }
 
         if (!modified) {
             return false;
@@ -473,29 +459,12 @@ void ApplyRuntimePeerDefaults()
     });
 
     // Prefer open peer discovery unless the user already chose otherwise.
-    gArgs.SoftSetBoolArg("-dnsseed", true);
+    gArgs.SoftSetBoolArg("-dnsseed", false);
     gArgs.SoftSetBoolArg("-listen", true);
     gArgs.SoftSetBoolArg("-discover", true);
     gArgs.SoftSetBoolArg("-upnp", true);
     gArgs.SoftSetArg("-maxconnections", "64");
 
-    // Inject seed addnodes into ro_config (multi-value; do not ForceSetArg single value).
-    gArgs.LockSettings([](util::Settings& settings) {
-        auto& main_section = settings.ro_config[""];
-        auto& addnodes = main_section["addnode"];
-        for (const char* endpoint : kSeedEndpoints) {
-            bool found = false;
-            for (const auto& v : addnodes) {
-                if (v.isStr() && v.get_str() == endpoint) {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-                addnodes.emplace_back(endpoint);
-            }
-        }
-    });
 }
 
 void SanitizeAfterConfigRead(const fs::path& config_home, const QString& default_datadir)
