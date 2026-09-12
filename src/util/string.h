@@ -13,6 +13,7 @@
 #include <locale>
 #include <sstream>
 #include <string>
+#include <cstdint>
 #include <vector>
 
 [[nodiscard]] inline std::string TrimString(const std::string& str, const std::string& pattern = " \f\n\r\t\v")
