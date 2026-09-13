@@ -72,7 +72,8 @@
 void ForceActivation();
 #endif
 
-#define URI_SCHEME "bloodstone"
+#define URI_SCHEME "azure"
+#define LEGACY_URI_SCHEME "bloodstone"
 
 namespace GUIUtil {
 
@@ -119,7 +120,7 @@ void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent)
     widget->setFont(fixedPitchFont());
     // We don't want translators to use own addresses in translations
     // and this is the only place, where this address is supplied.
-    widget->setPlaceholderText(QObject::tr("Enter a Bloodstone address (e.g. %1)").arg(
+    widget->setPlaceholderText(QObject::tr("Enter an AZURE address (e.g. %1)").arg(
         QString::fromStdString(DummyAddress(Params()))));
     widget->setValidator(new BitcoinAddressEntryValidator(parent));
     widget->setCheckValidator(new BitcoinAddressCheckValidator(parent));
@@ -132,8 +133,13 @@ void AddButtonShortcut(QAbstractButton* button, const QKeySequence& shortcut)
 
 bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 {
-    // return if URI is not valid or is no bitcoin: URI
-    if(!uri.isValid() || uri.scheme() != QString(URI_SCHEME))
+    // Accept the current AZURE URI scheme and the legacy Bloodstone scheme.
+    if (!uri.isValid())
+        return false;
+
+    const QString scheme = uri.scheme();
+    if (scheme.compare(QString(URI_SCHEME), Qt::CaseInsensitive) != 0 &&
+        scheme.compare(QString(LEGACY_URI_SCHEME), Qt::CaseInsensitive) != 0)
         return false;
 
     SendCoinsRecipient rv;
@@ -491,10 +497,10 @@ fs::path static StartupShortcutPath()
 {
     std::string chain = gArgs.GetChainName();
     if (chain == CBaseChainParams::MAIN)
-        return GetSpecialFolderPath(CSIDL_STARTUP) / "Bloodstone.lnk";
+        return GetSpecialFolderPath(CSIDL_STARTUP) / "AZURE.lnk";
     if (chain == CBaseChainParams::TESTNET) // Remove this special case when CBaseChainParams::TESTNET = "testnet4"
-        return GetSpecialFolderPath(CSIDL_STARTUP) / "Bloodstone (testnet).lnk";
-    return GetSpecialFolderPath(CSIDL_STARTUP) / strprintf("Bloodstone (%s).lnk", chain);
+        return GetSpecialFolderPath(CSIDL_STARTUP) / "AZURE (testnet).lnk";
+    return GetSpecialFolderPath(CSIDL_STARTUP) / strprintf("AZURE (%s).lnk", chain);
 }
 
 bool GetStartOnSystemStartup()
@@ -574,8 +580,8 @@ fs::path static GetAutostartFilePath()
 {
     std::string chain = gArgs.GetChainName();
     if (chain == CBaseChainParams::MAIN)
-        return GetAutostartDir() / "bloodstone.desktop";
-    return GetAutostartDir() / strprintf("bloodstone-%s.desktop", chain);
+        return GetAutostartDir() / "azure.desktop";
+    return GetAutostartDir() / strprintf("azure-%s.desktop", chain);
 }
 
 bool GetStartOnSystemStartup()
@@ -619,9 +625,9 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         optionFile << "[Desktop Entry]\n";
         optionFile << "Type=Application\n";
         if (chain == CBaseChainParams::MAIN)
-            optionFile << "Name=Bloodstone\n";
+            optionFile << "Name=AZURE\n";
         else
-            optionFile << strprintf("Name=Bloodstone (%s)\n", chain);
+            optionFile << strprintf("Name=AZURE (%s)\n", chain);
         optionFile << "Exec=" << pszExePath << strprintf(" -min -chain=%s\n", chain);
         optionFile << "Terminal=false\n";
         optionFile << "Hidden=false\n";

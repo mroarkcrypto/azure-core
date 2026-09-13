@@ -217,7 +217,7 @@ TestChain100Setup::TestChain100Setup()
        by default for the regtests.  */
     gArgs.ForceSetArg("-checknamedb", "-1");
 
-    SetMockTime(1598887952);
+    SetMockTime(Params().GenesisBlock().GetBlockTime() + 1);
     constexpr std::array<unsigned char, 32> vchKey = {
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}};
     coinbaseKey.Set(vchKey.begin(), vchKey.end(), true);
@@ -229,7 +229,7 @@ TestChain100Setup::TestChain100Setup()
         LOCK(::cs_main);
         assert(
             m_node.chainman->ActiveChain().Tip()->GetBlockHash().ToString() ==
-            "1b9933f19741008a548f1b5bf38c9f5da95afdcb35f14e52585e4fcde0e8ee4f");
+            "88786bf13cd19f6f88a3715841e7811e9db34fc60b6e0c38517d6c5ffb623ac6");
     }
 }
 
@@ -239,7 +239,7 @@ void TestChain100Setup::mineBlocks(int num_blocks)
     for (int i = 0; i < num_blocks; i++) {
         std::vector<CMutableTransaction> noTxns;
         CBlock b = CreateAndProcessBlock(noTxns, scriptPubKey);
-        SetMockTime(GetTime() + 1);
+        SetMockTime(GetTime() + 270);
         m_coinbase_txns.push_back(b.vtx[0]);
     }
 }
