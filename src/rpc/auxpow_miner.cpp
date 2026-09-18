@@ -31,22 +31,22 @@ void auxMiningCheck(const JSONRPCRequest& request)
   const auto& connman = EnsureConnman (node);
   const auto& chainman = EnsureChainman (node);
 
-  /* Young LRGK mainnet often has zero external peers. Merge-mine parent pools
-     still need createauxblock/submitauxblock. Opt-in via -allowunconnectedmining
-     (default true for this fork lab node so AuxPoW dual-submit works offline). */
+  /* AZURE may have zero external peers during isolated or recovery operation.
+     Merge-mining clients still need createauxblock/submitauxblock. Controlled via
+     -allowunconnectedmining (default true so AuxPoW submission can work offline). */
   const bool allowUnconnected = gArgs.GetBoolArg ("-allowunconnectedmining", true);
 
   if (connman.GetNodeCount (ConnectionDirection::Both) == 0
         && !Params ().MineBlocksOnDemand ()
         && !allowUnconnected)
     throw JSONRPCError (RPC_CLIENT_NOT_CONNECTED,
-                        "Bloodstone is not connected!");
+                        "AZURE is not connected!");
 
   if (chainman.ActiveChainstate ().IsInitialBlockDownload ()
         && !Params ().MineBlocksOnDemand ()
         && !allowUnconnected)
     throw JSONRPCError (RPC_CLIENT_IN_INITIAL_DOWNLOAD,
-                        "Bloodstone is downloading blocks...");
+                        "AZURE is downloading blocks...");
 }
 
 }  // anonymous namespace
