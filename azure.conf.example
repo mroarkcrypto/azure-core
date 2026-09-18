@@ -7,7 +7,8 @@ prune=0
 
 port=29825
 bind=0.0.0.0
-externalip=64.188.22.190
+# Optional: set this only to this node's own public IP
+# externalip=YOUR_PUBLIC_IP
 
 dnsseed=0
 maxconnections=32
