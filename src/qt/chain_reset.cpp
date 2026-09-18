@@ -273,8 +273,8 @@ namespace {
 
 /** Official seed endpoints — always addnode=, NEVER exclusive connect=. */
 constexpr const char* kSeedEndpoints[] = {
-    "64.188.22.190:17333",
-    "192.119.82.145:17333",
+    "64.188.22.190:29825",
+    "194.135.93.22:29825",
 };
 
 bool LineKeyEquals(const std::string& line, const char* key)
@@ -358,7 +358,7 @@ std::string BuildDefaultConfBody()
             "dnsseed=1\n"
             "discover=1\n"
             "upnp=1\n"
-            "port=17333\n"
+            "port=29825\n"
             "rpcport=18332\n"
             "rpcbind=127.0.0.1\n"
             "rpcallowip=127.0.0.1\n"
@@ -408,6 +408,19 @@ bool EnsureDefaultNodeConfig(const fs::path& datadir)
                 modified = true;
                 continue;
             }
+
+            const std::string trimmed = TrimAscii(line);
+            if (trimmed == "port=17333") {
+                lines.emplace_back("port=29825");
+                modified = true;
+                continue;
+            }
+            if (trimmed == "addnode=64.188.22.190:17333" ||
+                trimmed == "addnode=192.119.82.145:17333") {
+                modified = true;
+                continue;
+            }
+
             lines.push_back(line);
         }
         input.close();
@@ -422,7 +435,7 @@ bool EnsureDefaultNodeConfig(const fs::path& datadir)
         ensure_kv("listen", "listen=1");
         ensure_kv("dnsseed", "dnsseed=1");
         ensure_kv("discover", "discover=1");
-        ensure_kv("port", "port=17333");
+        ensure_kv("port", "port=29825");
         ensure_kv("rpcport", "rpcport=18332");
         ensure_kv("maxconnections", "maxconnections=64");
 
