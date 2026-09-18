@@ -102,9 +102,9 @@ bool QuasarWitnessService::isEnabled() const
     }
     QSettings settings;
     if (!settings.contains(QStringLiteral("bQuasarWitness"))) {
-        return true; // default on
+        return false; // AZURE default: opt-in only
     }
-    return settings.value(QStringLiteral("bQuasarWitness"), true).toBool();
+    return settings.value(QStringLiteral("bQuasarWitness"), false).toBool();
 }
 
 QString QuasarWitnessService::deviceId() const
