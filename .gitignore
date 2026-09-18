@@ -174,3 +174,13 @@ dist/
 /guix-build-*
 
 *.~*
+
+# Local AZURE build outputs
+/src/bloodstoned
+/src/bloodstone-cli
+/src/bloodstone-hash
+/src/qt/bloodstone-qt
+
+# Local backup files
+/src/qt/res/icons/bitcoin.png.lrgk-backup
+/src/wallet/db.cpp.before-boost-fix
