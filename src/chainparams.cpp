@@ -427,10 +427,10 @@ public:
         // AZURE tree: // assert(consensus.hashGenesisBlock == ...);
         // AZURE tree: // assert(genesis.hashMerkleRoot == ...);
 
+        // AZURE testnet currently has no dedicated DNS or fixed seeds.
+        // Add AZURE-controlled testnet seeds here when available.
         vFixedSeeds.clear();
         vSeeds.clear();
-        vSeeds.emplace_back("seed1.testnet.bloodstone.net");
-        vSeeds.emplace_back("seed2.testnet.bloodstone.net");
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,48); // AZURE L…
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,125);
